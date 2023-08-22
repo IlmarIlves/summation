@@ -3,6 +3,7 @@ package com.example.demo;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AdditionController {
 
-    private List<AdditionOperation> additionOperations = new ArrayList<>();
+      private ConcurrentLinkedQueue<AdditionOperation> additionOperations = new ConcurrentLinkedQueue<>();
 
     @GetMapping("/add")
     public String addNumbers(
@@ -25,7 +26,6 @@ public class AdditionController {
 
         int sum = num1 + num2;
         additionOperations.add(new AdditionOperation(num1, num2, sum));
-        System.out.println(additionOperations);
         return "The sum of " + num1 + " and " + num2 + " is: " + sum;
     }
 
@@ -33,8 +33,6 @@ public class AdditionController {
     public String searchAndSort(
             @RequestParam(name = "numToSearch") int numToSearch,
             @RequestParam(name = "sortingAttribute") String sortingAttribute) {
-
-        System.out.println(additionOperations);
 
         List<AdditionOperation> filteredOperations = additionOperations.stream()
                 .filter(operation -> operation.getNum1() == numToSearch || operation.getNum2() == numToSearch)
