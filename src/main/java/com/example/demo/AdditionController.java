@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AdditionController {
 
-      private ConcurrentLinkedQueue<AdditionOperation> additionOperations = new ConcurrentLinkedQueue<>();
+    private ConcurrentLinkedQueue<AdditionOperation> additionOperations = new ConcurrentLinkedQueue<>();
 
     @GetMapping("/add")
     public String addNumbers(
@@ -35,7 +34,8 @@ public class AdditionController {
             @RequestParam(name = "sortingAttribute") String sortingAttribute) {
 
         List<AdditionOperation> filteredOperations = additionOperations.stream()
-                .filter(operation -> operation.getNum1() == numToSearch || operation.getNum2() == numToSearch)
+                .filter(operation -> operation.getNum1() == numToSearch || operation.getNum2() == numToSearch
+                        || operation.getSum() == numToSearch)
                 .collect(Collectors.toList());
 
         Comparator<AdditionOperation> comparator = sortingAttribute.equals("ascending")
